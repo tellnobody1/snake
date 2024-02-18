@@ -4,6 +4,7 @@ import android.view.KeyEvent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
@@ -22,7 +23,7 @@ import kotlinx.coroutines.launch
 class GameActivity : BaseActivity() {
     private lateinit var dataStore: GameCache
     private val isPlaying = mutableStateOf(true)
-    private var score = mutableStateOf(0)
+    private var score = mutableIntStateOf(0)
     private lateinit var scope: CoroutineScope
     private lateinit var playerName: String
     private lateinit var highScores: List<HighScore>
@@ -34,7 +35,7 @@ class GameActivity : BaseActivity() {
                 scope.launch { dataStore.saveHighScore(highScores) }
             }
         },
-        onFoodEaten = { score.value++ },
+        onFoodEaten = { score.intValue++ },
     )
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
@@ -81,17 +82,20 @@ class GameActivity : BaseActivity() {
         scope = rememberCoroutineScope()
         dataStore = GameCache(applicationContext)
         playerName =
-            dataStore.getPlayerName.collectAsState(initial = stringResource(id = R.string.default_player_name)).value
+            dataStore.getPlayerName.collectAsState(initial = stringResource(R.string.default_player_name)).value
         highScores = dataStore.getHighScores.collectAsState(initial = listOf()).value.plus(
-            HighScore(playerName, score.value)
+            HighScore(playerName, score.intValue)
         ).sortedByDescending { it.score }.take(TOP_10)
 
         Column {
             if (isPlaying.value) {
-                GameScreen(gameEngine) { w, h -> gameEngine.setSize(w, h) }
+                GameScreen(gameEngine) { w, h ->
+                    gameEngine.boardWidth = w
+                    gameEngine.boardHeight = h
+                }
             } else {
-                EndScreen(score.value) {
-                    score.value = 0
+                EndScreen(score.intValue) {
+                    score.intValue = 0
                     gameEngine.reset()
                     isPlaying.value = true
                 }

@@ -31,13 +31,22 @@ class GameEngine(
         )
     val state: Flow<State> = mutableState
     private val currentDirection = mutableStateOf(SnakeDirection.Right)
-    private var boardWidth = BOARD_WIDTH
-    private var boardHeight = BOARD_WIDTH
-
-    fun setSize(w: Int, h: Int) {
-        boardWidth = w
-        boardHeight = h
-    }
+    var boardWidth = BOARD_WIDTH
+        set(value) {
+            scope.launch {
+                mutex.withLock {
+                    field = value
+                }
+            }
+        }
+    var boardHeight = BOARD_WIDTH
+        set(value) {
+            scope.launch {
+                mutex.withLock {
+                    field = value
+                }
+            }
+        }
 
     var move = Pair(1, 0)
         set(value) {
