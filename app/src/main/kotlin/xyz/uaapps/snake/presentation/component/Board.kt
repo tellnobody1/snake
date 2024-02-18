@@ -11,12 +11,11 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import xyz.uaapps.snake.data.model.State
-import xyz.uaapps.snake.presentation.theme.DarkGreen
 import xyz.uaapps.snake.presentation.theme.border2dp
 import xyz.uaapps.snake.presentation.theme.corner4dp
 import xyz.uaapps.snake.presentation.theme.tile16dp
@@ -34,20 +33,20 @@ fun Board(state: State, onSizeInit: (Int, Int) -> Unit) {
             Box(
                 Modifier
                     .size(tile16dp * w + border2dp, tile16dp * h + border2dp)
-                    .border(border2dp, DarkGreen)
+                    .border(border2dp, MaterialTheme.colorScheme.onBackground)
             )
             Box(
                 Modifier
                     .offset(x = tile16dp * state.food.first, y = tile16dp * state.food.second)
                     .size(tile16dp)
-                    .background(DarkGreen, CircleShape)
+                    .background(MaterialTheme.colorScheme.onBackground, CircleShape)
             )
             state.snake.forEach {
                 Box(
                     modifier = Modifier
                         .offset(x = tile16dp * it.first, y = tile16dp * it.second)
                         .size(tile16dp)
-                        .background(DarkGreen, RoundedCornerShape(corner4dp))
+                        .background(MaterialTheme.colorScheme.onBackground, RoundedCornerShape(corner4dp))
                 )
             }
         }
