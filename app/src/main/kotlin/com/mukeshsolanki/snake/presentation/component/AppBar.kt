@@ -20,11 +20,6 @@ fun AppBar(
     Scaffold(topBar = {
         SmallTopAppBar(
             title = { TitleLarge(text = title) },
-            navigationIcon = {
-                IconButton(onClick = onBackClicked) {
-                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-                }
-            },
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.background,
                 titleContentColor = MaterialTheme.colorScheme.onBackground,

@@ -27,7 +27,7 @@ class MainActivity : BaseActivity() {
             composable(Screen.Menu.route) { MenuScreen(navController) }
             composable(Screen.HighScores.route) { HighScoreScreen(navController) }
             composable(Screen.Settings.route) { SettingScreen(navController) }
-            composable(Screen.About.route) { AboutScreen(navController) }
+            composable(Screen.About.route) { AboutScreen() }
         }
     }
 }

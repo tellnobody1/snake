@@ -1,7 +1,10 @@
 package com.mukeshsolanki.snake.presentation.screen
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,9 +29,9 @@ fun MenuScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(padding8dp),
+            .padding(padding8dp)
+            .verticalScroll(ScrollState(0)),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
     ) {
         val context = LocalContext.current
         DisplayLarge(text = stringResource(R.string.app_name))
