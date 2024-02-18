@@ -8,10 +8,10 @@ import com.mukeshsolanki.snake.presentation.activity.GameActivity
 import com.mukeshsolanki.snake.presentation.component.Board
 
 @Composable
-fun GameScreen(gameEngine: GameEngine, score: Int) {
+fun GameScreen(gameEngine: GameEngine, score: Int, onSizeInit: (Int, Int) -> Unit) {
     val state = gameEngine.state.collectAsState(initial = null)
     val activity = LocalContext.current as GameActivity
-    state.value?.let { Board(it, gameEngine) }
+    state.value?.let { Board(it, onSizeInit) }
 //    AppBar(
 //        title = stringResource(id = R.string.your_score, score),
 //        onBackClicked = { activity.finish() }) { contentPadding ->

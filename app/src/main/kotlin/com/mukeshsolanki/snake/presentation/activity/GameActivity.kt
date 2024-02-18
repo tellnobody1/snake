@@ -1,7 +1,5 @@
 package com.mukeshsolanki.snake.presentation.activity
 
-import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.KeyEvent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
@@ -9,7 +7,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
-import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
 import com.mukeshsolanki.snake.R
 import com.mukeshsolanki.snake.data.cache.GameCache
@@ -29,7 +26,16 @@ class GameActivity : BaseActivity() {
     private lateinit var scope: CoroutineScope
     private lateinit var playerName: String
     private lateinit var highScores: List<HighScore>
-    private lateinit var gameEngine: GameEngine
+    private val gameEngine: GameEngine = GameEngine(
+        scope = lifecycleScope,
+        onGameEnded = {
+            if (isPlaying.value) {
+                isPlaying.value = false
+                scope.launch { dataStore.saveHighScore(highScores) }
+            }
+        },
+        onFoodEaten = { score.value++ },
+    )
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         val x = super.onKeyUp(keyCode, event)
@@ -70,23 +76,6 @@ class GameActivity : BaseActivity() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val displayMetrics = resources.displayMetrics
-
-        gameEngine = GameEngine(
-            scope = lifecycleScope,
-            onGameEnded = {
-                if (isPlaying.value) {
-                    isPlaying.value = false
-                    scope.launch { dataStore.saveHighScore(highScores) }
-                }
-            },
-            onFoodEaten = { score.value++ },
-        )
-    }
-
     @Composable
     override fun Content() {
         scope = rememberCoroutineScope()
@@ -99,7 +88,7 @@ class GameActivity : BaseActivity() {
 
         Column {
             if (isPlaying.value) {
-                GameScreen(gameEngine, score.value)
+                GameScreen(gameEngine, score.value, onSizeInit = { w, h -> gameEngine.setSize(w, h) })
             } else {
                 EndScreen(score.value) {
                     score.value = 0
