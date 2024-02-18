@@ -84,10 +84,8 @@ class GameActivity : BaseActivity() {
                 }
             },
             onFoodEaten = { score.value++ },
-            widthPixels = displayMetrics.widthPixels,
         )
     }
-
 
     @Composable
     override fun Content() {

@@ -1,29 +1,31 @@
 package com.mukeshsolanki.snake.presentation.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.KeyEvent
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.mukeshsolanki.snake.data.model.State
 import com.mukeshsolanki.snake.domain.game.GameEngine
+import com.mukeshsolanki.snake.domain.game.GameEngine.Companion.BOARD_WIDTH
 import com.mukeshsolanki.snake.presentation.theme.DarkGreen
-import com.mukeshsolanki.snake.presentation.theme.border2dp
 import com.mukeshsolanki.snake.presentation.theme.corner4dp
+import kotlin.math.floor
 
 @Composable
 fun Board(state: State, gameEngine: GameEngine) {
     BoxWithConstraints {
-        gameEngine.updateHeight(maxHeight.value.toInt())
         val tileSize = with(LocalDensity.current) {
-            (maxWidth.toPx() / GameEngine.BOARD_WIDTH).toInt().dp
+            floor(maxWidth.toPx() / BOARD_WIDTH).dp
+        }
+        with(LocalDensity.current) {
+            val w = maxWidth.toPx()
+            val h = maxHeight.toPx()
+            val s = tileSize.toPx()
+            gameEngine.setSize(floor(w / s).toInt(), floor(h / s).toInt())
         }
         Box(Modifier.size(maxWidth, maxHeight))
         Box(
@@ -37,7 +39,7 @@ fun Board(state: State, gameEngine: GameEngine) {
                 modifier = Modifier
                     .offset(x = tileSize * it.first, y = tileSize * it.second)
                     .size(tileSize)
-                    .background(DarkGreen, RoundedCornerShape(corner4dp))
+                    .background(DarkGreen)
             )
         }
     }

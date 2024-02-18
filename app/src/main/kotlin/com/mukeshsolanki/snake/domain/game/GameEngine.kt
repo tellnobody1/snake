@@ -1,6 +1,8 @@
 package com.mukeshsolanki.snake.domain.game
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import com.mukeshsolanki.snake.data.model.State
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -10,7 +12,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.nio.ByteOrder
 import java.util.*
 import kotlin.math.floor
 
@@ -18,7 +19,6 @@ class GameEngine(
     private val scope: CoroutineScope,
     private val onGameEnded: () -> Unit,
     private val onFoodEaten: () -> Unit,
-    private val widthPixels: Int,
 ) {
     private val mutex = Mutex()
     private val mutableState =
@@ -31,10 +31,12 @@ class GameEngine(
         )
     val state: Flow<State> = mutableState
     private val currentDirection = mutableStateOf(SnakeDirection.Right)
+    private var boardWidth = BOARD_WIDTH
     private var boardHeight = BOARD_WIDTH
 
-    fun updateHeight(heightPixels: Int) {
-        boardHeight = heightPixels / (widthPixels / BOARD_WIDTH)
+    fun setSize(w: Int, h: Int) {
+        boardWidth = w
+        boardHeight = h
     }
 
     var move = Pair(1, 0)
@@ -76,7 +78,7 @@ class GameEngine(
                     val newPosition = it.snake.first().let { poz ->
                         mutex.withLock {
                             Pair(
-                                (poz.first + move.first + BOARD_WIDTH) % BOARD_WIDTH,
+                                (poz.first + move.first + boardWidth) % boardWidth,
                                 (poz.second + move.second + boardHeight) % boardHeight
                             )
                         }
@@ -93,7 +95,7 @@ class GameEngine(
 
                     it.copy(
                         food = if (newPosition == it.food) Pair(
-                            Random().nextInt(BOARD_WIDTH),
+                            Random().nextInt(boardWidth),
                             Random().nextInt(boardHeight)
                         ) else it.food,
                         snake = listOf(newPosition) + it.snake.take(snakeLength - 1),
