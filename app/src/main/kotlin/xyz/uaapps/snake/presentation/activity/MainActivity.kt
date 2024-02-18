@@ -1,6 +1,11 @@
 package xyz.uaapps.snake.presentation.activity
 
+import android.os.Bundle
+import android.view.KeyEvent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable

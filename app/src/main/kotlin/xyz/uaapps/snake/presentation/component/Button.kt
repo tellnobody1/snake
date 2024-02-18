@@ -16,7 +16,7 @@ fun AppButton(modifier: Modifier = Modifier, isSelected: Boolean = false, text: 
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary,
             contentColor = if (isSelected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onPrimary,
-        )
+        ),
     ) { Text(text = text) }
 }
 
