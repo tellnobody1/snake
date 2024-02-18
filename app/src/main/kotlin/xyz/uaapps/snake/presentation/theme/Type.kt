@@ -8,7 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import xyz.uaapps.snake.R
 
-private val appFontFamily = FontFamily(fonts = listOf(Font(resId = R.font.snake)))
+val appFontFamily = FontFamily(fonts = listOf(Font(resId = R.font.snake)))
 
 val Typography = Typography(
     displayLarge = TextStyle(
@@ -56,11 +56,11 @@ val Typography = Typography(
 //        fontWeight = FontWeight.Medium,
 //        fontSize = 14.sp,
 //    ),
-//    bodyLarge = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 16.sp,
-//    ),
+    bodyLarge = TextStyle(
+        fontFamily = appFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+    ),
 //    bodyMedium = TextStyle(
 //        fontFamily = appFontFamily,
 //        fontWeight = FontWeight.Normal,

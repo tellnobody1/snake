@@ -58,17 +58,11 @@ fun SettingScreen(navController: NavHostController) {
                     start = padding16dp,
                     end = padding16dp
                 )
-                .verticalScroll(ScrollState(0))
                 .border(width = border2dp, color = MaterialTheme.colorScheme.onBackground),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             TitleLarge(
-                modifier = Modifier.padding(
-                    top = padding64dp,
-                    bottom = padding16dp,
-                    start = padding16dp,
-                    end = padding16dp
-                ),
+                modifier = Modifier.padding(padding16dp),
                 text = stringResource(R.string.player_name),
                 textAlign = TextAlign.Center
             )

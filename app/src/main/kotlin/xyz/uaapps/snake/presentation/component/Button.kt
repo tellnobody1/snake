@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import xyz.uaapps.snake.presentation.theme.appFontFamily
 import xyz.uaapps.snake.presentation.theme.corner4dp
 import xyz.uaapps.snake.presentation.theme.size64dp
 
@@ -19,24 +20,5 @@ fun AppButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) 
             containerColor = MaterialTheme.colorScheme.onBackground,
             contentColor = MaterialTheme.colorScheme.onPrimary
         )
-    ) { Text(text = text) }
-}
-
-@Composable
-fun AppIconButton(modifier: Modifier = Modifier, icon: ImageVector, onClick: () -> Unit) {
-    IconButton(
-        onClick = onClick,
-        modifier = modifier
-            .size(size64dp)
-            .background(
-                color = MaterialTheme.colorScheme.onBackground,
-                shape = RoundedCornerShape(corner4dp)
-            ),
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onPrimary
-        )
-    }
+    ) { Text(text = text, fontFamily = appFontFamily) }
 }
