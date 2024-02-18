@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.mukeshsolanki.snake.BuildConfig
 import com.mukeshsolanki.snake.R
@@ -38,8 +39,7 @@ fun AboutScreen(navController: NavHostController) {
                     bottom = padding16dp,
                     start = padding16dp,
                     end = padding16dp
-                )
-                .border(width = border2dp, color = MaterialTheme.colorScheme.onBackground),
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

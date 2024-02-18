@@ -1,11 +1,15 @@
 package com.mukeshsolanki.snake.presentation.activity
 
+import android.os.Bundle
+import android.util.DisplayMetrics
+import android.view.KeyEvent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
 import com.mukeshsolanki.snake.R
 import com.mukeshsolanki.snake.data.cache.GameCache
@@ -25,16 +29,65 @@ class GameActivity : BaseActivity() {
     private lateinit var scope: CoroutineScope
     private lateinit var playerName: String
     private lateinit var highScores: List<HighScore>
-    private var gameEngine = GameEngine(
-        scope = lifecycleScope,
-        onGameEnded = {
-            if (isPlaying.value) {
-                isPlaying.value = false
-                scope.launch { dataStore.saveHighScore(highScores) }
+    private lateinit var gameEngine: GameEngine
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        val x = super.onKeyUp(keyCode, event)
+        if (x) {
+            return x
+        } else {
+            if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+                return if (gameEngine.move != Pair(0, -1) && gameEngine.move != Pair(0, 1)) {
+                    gameEngine.move = Pair(0, -1)
+                    true
+                } else {
+                    false
+                }
+            } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+                return if (gameEngine.move != Pair(1, 0) && gameEngine.move != Pair(-1, 0)) {
+                    gameEngine.move = Pair(1, 0)
+                    true
+                } else {
+                    false
+                }
+            } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                return if (gameEngine.move != Pair(0, -1) && gameEngine.move != Pair(0, 1)) {
+                    gameEngine.move = Pair(0, 1)
+                    true
+                } else {
+                    false
+                }
+            } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                return if (gameEngine.move != Pair(1, 0) && gameEngine.move != Pair(-1, 0)) {
+                    gameEngine.move = Pair(-1, 0)
+                    true
+                } else {
+                    false
+                }
+            } else {
+                return false
             }
-        },
-        onFoodEaten = { score.value++ }
-    )
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val displayMetrics = resources.displayMetrics
+
+        gameEngine = GameEngine(
+            scope = lifecycleScope,
+            onGameEnded = {
+                if (isPlaying.value) {
+                    isPlaying.value = false
+                    scope.launch { dataStore.saveHighScore(highScores) }
+                }
+            },
+            onFoodEaten = { score.value++ },
+            widthPixels = displayMetrics.widthPixels,
+        )
+    }
+
 
     @Composable
     override fun Content() {
@@ -45,6 +98,7 @@ class GameActivity : BaseActivity() {
         highScores = dataStore.getHighScores.collectAsState(initial = listOf()).value.plus(
             HighScore(playerName, score.value)
         ).sortedByDescending { it.score }.take(TOP_10)
+
         Column {
             if (isPlaying.value) {
                 GameScreen(gameEngine, score.value)
