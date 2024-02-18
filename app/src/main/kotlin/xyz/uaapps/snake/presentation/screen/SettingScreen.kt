@@ -3,10 +3,8 @@ package xyz.uaapps.snake.presentation.screen
 import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -26,7 +24,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import xyz.uaapps.snake.R
 import xyz.uaapps.snake.data.cache.GameCache
@@ -34,8 +36,6 @@ import xyz.uaapps.snake.presentation.component.AppBar
 import xyz.uaapps.snake.presentation.component.AppButton
 import xyz.uaapps.snake.presentation.theme.border2dp
 import xyz.uaapps.snake.presentation.theme.padding16dp
-import xyz.uaapps.snake.presentation.theme.padding64dp
-import xyz.uaapps.snake.presentation.theme.width248dp
 
 @Composable
 fun SettingScreen(navController: NavHostController) {
@@ -75,12 +75,12 @@ fun SettingScreen(navController: NavHostController) {
                 modifier = Modifier
                     .focusRequester(focusRequester)
                     .fillMaxWidth()
-                    .padding(horizontal = padding64dp)
+                    .padding(horizontal = padding16dp)
                     .border(width = border2dp, color = MaterialTheme.colorScheme.onBackground)
             )
             AppButton(
                 text = stringResource(R.string.save), modifier = Modifier
-                    .width(width248dp)
+                    .fillMaxWidth()
                     .padding(padding16dp)
             ) {
                 scope.launch {

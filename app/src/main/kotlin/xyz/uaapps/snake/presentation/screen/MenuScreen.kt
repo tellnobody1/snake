@@ -9,6 +9,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,6 +26,8 @@ import xyz.uaapps.snake.presentation.theme.padding8dp
 
 @Composable
 fun MenuScreen(navController: NavHostController) {
+    val selected = remember { mutableIntStateOf(1) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -32,16 +37,16 @@ fun MenuScreen(navController: NavHostController) {
     ) {
         val context = LocalContext.current
         Text(text = stringResource(R.string.app_name), style = MaterialTheme.typography.displayLarge)
-        AppButton(modifier = Modifier.fillMaxWidth(), text = stringResource(R.string.new_game)) {
+        AppButton(modifier = Modifier.fillMaxWidth(), text = stringResource(R.string.new_game), isSelected = selected.intValue == 1) {
             context.launchActivity<GameActivity>()
         }
-        AppButton(modifier = Modifier.fillMaxWidth(), text = stringResource(R.string.high_score)) {
+        AppButton(modifier = Modifier.fillMaxWidth(), text = stringResource(R.string.high_score), isSelected = selected.intValue == 2) {
             navController.navigate(Screen.HighScores.route)
         }
-        AppButton(modifier = Modifier.fillMaxWidth(), text = stringResource(R.string.settings)) {
+        AppButton(modifier = Modifier.fillMaxWidth(), text = stringResource(R.string.settings), isSelected = selected.intValue == 3) {
             navController.navigate(Screen.Settings.route)
         }
-        AppButton(modifier = Modifier.fillMaxWidth(), text = stringResource(R.string.about)) {
+        AppButton(modifier = Modifier.fillMaxWidth(), text = stringResource(R.string.about), isSelected = selected.intValue == 4) {
             navController.navigate(Screen.About.route)
         }
     }

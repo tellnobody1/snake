@@ -20,9 +20,7 @@ import xyz.uaapps.snake.presentation.theme.padding8dp
 fun EndScreen(score: Int, onTryAgain: () -> Unit) {
     AppBar(title = "") { contentPadding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding),
+            modifier = Modifier.fillMaxSize().padding(contentPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
