@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -21,7 +22,6 @@ import xyz.uaapps.snake.data.cache.GameCache
 import xyz.uaapps.snake.data.model.HighScore
 import xyz.uaapps.snake.domain.base.TOP_10
 import xyz.uaapps.snake.presentation.component.AppBar
-import xyz.uaapps.snake.presentation.component.TitleLarge
 import xyz.uaapps.snake.presentation.theme.border2dp
 import xyz.uaapps.snake.presentation.theme.padding16dp
 import xyz.uaapps.snake.presentation.theme.padding8dp
@@ -52,15 +52,17 @@ fun HighScoreScreen() {
                     .fillMaxWidth()
                     .padding(padding16dp)
             ) {
-                TitleLarge(
-                    text = stringResource(R.string.player_name),
+                Text(
+                    text = stringResource(R.string.player_name_table),
                     modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge,
                 )
-                TitleLarge(
+                Text(
                     text = stringResource(R.string.score),
                     modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge,
                 )
             }
             LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -80,15 +82,17 @@ private fun HighScoreItem(highScore: HighScore) {
             .fillMaxWidth()
             .padding(padding8dp)
     ) {
-        TitleLarge(
+        Text(
             text = highScore.playerName,
             modifier = Modifier.weight(1f),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleLarge,
         )
-        TitleLarge(
+        Text(
             text = highScore.score.toString(),
             modifier = Modifier.weight(1f),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleLarge,
         )
     }
 }

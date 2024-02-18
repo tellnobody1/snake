@@ -1,15 +1,14 @@
 package xyz.uaapps.snake.presentation.screen
 
 import android.widget.Toast
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -33,7 +32,6 @@ import xyz.uaapps.snake.R
 import xyz.uaapps.snake.data.cache.GameCache
 import xyz.uaapps.snake.presentation.component.AppBar
 import xyz.uaapps.snake.presentation.component.AppButton
-import xyz.uaapps.snake.presentation.component.TitleLarge
 import xyz.uaapps.snake.presentation.theme.border2dp
 import xyz.uaapps.snake.presentation.theme.padding16dp
 import xyz.uaapps.snake.presentation.theme.padding64dp
@@ -51,7 +49,6 @@ fun SettingScreen(navController: NavHostController) {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
                 .padding(
                     top = it.calculateTopPadding(),
                     bottom = padding16dp,
@@ -61,10 +58,11 @@ fun SettingScreen(navController: NavHostController) {
                 .border(width = border2dp, color = MaterialTheme.colorScheme.onBackground),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            TitleLarge(
+            Text(
                 modifier = Modifier.padding(padding16dp),
                 text = stringResource(R.string.player_name),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge,
             )
             LaunchedEffect(Unit) {
                 focusRequester.requestFocus()

@@ -1,24 +1,24 @@
 package xyz.uaapps.snake.presentation.component
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import xyz.uaapps.snake.presentation.theme.appFontFamily
-import xyz.uaapps.snake.presentation.theme.corner4dp
-import xyz.uaapps.snake.presentation.theme.size64dp
 
 @Composable
 fun AppButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+    val isSelected = remember { mutableStateOf(false) }
+
     Button(
         onClick = onClick,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.onBackground,
-            contentColor = MaterialTheme.colorScheme.onPrimary
+            containerColor = if (isSelected.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary,
+            contentColor = if (isSelected.value) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onPrimary,
         )
-    ) { Text(text = text, fontFamily = appFontFamily) }
+    ) { Text(text = text) }
 }

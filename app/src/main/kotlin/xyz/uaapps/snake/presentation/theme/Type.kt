@@ -1,89 +1,26 @@
 package xyz.uaapps.snake.presentation.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import xyz.uaapps.snake.R
 
-val appFontFamily = FontFamily(fonts = listOf(Font(resId = R.font.snake)))
+private val appFontFamily = FontFamily(Font(R.font.snake))
 
-val Typography = Typography(
-    displayLarge = TextStyle(
-        fontFamily = appFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 57.sp,
-    ),
-//    displayMedium = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 45.sp,
-//    ),
-//    displaySmall = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 36.sp,
-//    ),
-//    headlineLarge = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 32.sp,
-//    ),
-//    headlineMedium = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 28.sp,
-//    ),
-//    headlineSmall = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 24.sp,
-//    ),
-    titleLarge = TextStyle(
-        fontFamily = appFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-    ),
-//    titleMedium = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Medium,
-//        fontSize = 16.sp,
-//    ),
-//    titleSmall = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Medium,
-//        fontSize = 14.sp,
-//    ),
-    bodyLarge = TextStyle(
-        fontFamily = appFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-    ),
-//    bodyMedium = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 14.sp,
-//    ),
-//    bodySmall = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 12.sp,
-//    ),
-//    labelLarge = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Medium,
-//        fontSize = 14.sp,
-//    ),
-//    labelMedium = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Medium,
-//        fontSize = 12.sp,
-//    ),
-//    labelSmall = TextStyle(
-//        fontFamily = appFontFamily,
-//        fontWeight = FontWeight.Medium,
-//        fontSize = 11.sp,
-//    ),
+val Typography = Typography().copy(
+    displayLarge = Typography().displayLarge.copy(fontFamily = appFontFamily),
+    displayMedium = Typography().displayMedium.copy(fontFamily = appFontFamily),
+    displaySmall = Typography().displaySmall.copy(fontFamily = appFontFamily),
+    headlineLarge = Typography().headlineLarge.copy(fontFamily = appFontFamily),
+    headlineMedium = Typography().headlineMedium.copy(fontFamily = appFontFamily),
+    headlineSmall = Typography().headlineSmall.copy(fontFamily = appFontFamily),
+    titleLarge = Typography().titleLarge.copy(fontFamily = appFontFamily),
+    titleMedium = Typography().titleMedium.copy(fontFamily = appFontFamily),
+    titleSmall = Typography().titleSmall.copy(fontFamily = appFontFamily),
+    bodyLarge = Typography().bodyLarge.copy(fontFamily = appFontFamily),
+    bodyMedium = Typography().bodyMedium.copy(fontFamily = appFontFamily),
+    bodySmall = Typography().bodySmall.copy(fontFamily = appFontFamily),
+    labelLarge = Typography().labelLarge.copy(fontFamily = appFontFamily),
+    labelMedium = Typography().labelMedium.copy(fontFamily = appFontFamily),
+    labelSmall = Typography().labelSmall.copy(fontFamily = appFontFamily),
 )

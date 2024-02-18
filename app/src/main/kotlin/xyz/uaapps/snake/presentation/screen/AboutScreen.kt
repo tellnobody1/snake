@@ -5,6 +5,8 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -32,15 +34,18 @@ fun AboutScreen() {
             .verticalScroll(ScrollState(0)),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        DisplayLarge(text = stringResource(R.string.app_name))
-        TitleLarge(
-            modifier = Modifier.padding(padding8dp),
-            text = BuildConfig.VERSION_NAME
+        Text(
+            text = stringResource(R.string.app_name),
+            style = MaterialTheme.typography.displayLarge,
         )
-        BodyLarge(
+        Text(
+            modifier = Modifier.padding(padding8dp),
+            text = BuildConfig.VERSION_NAME,
+            style = MaterialTheme.typography.titleLarge,
+        )
+        Text(
             modifier = Modifier.padding(padding8dp),
             text = stringResource(R.string.about_game),
-            textAlign = TextAlign.Justify
         )
         AppButton(
             modifier = Modifier.fillMaxWidth(),

@@ -9,6 +9,7 @@
     <string name="try_again">Try Again</string>
     <string name="high_score">High Scores</string>
     <string name="player_name">Player Name</string>
+    <string name="player_name_table">Name</string>
     <string name="score">Score</string>
     <string name="new_game">New Game</string>
     <string name="settings">Settings</string>

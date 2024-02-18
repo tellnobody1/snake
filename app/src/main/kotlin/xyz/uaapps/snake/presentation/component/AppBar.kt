@@ -15,12 +15,11 @@ fun AppBar(
 ) {
     Scaffold(topBar = {
         TopAppBar(
-            title = { TitleLarge(text = title) },
+            title = { Text(text = title, style = MaterialTheme.typography.titleLarge) },
             modifier = Modifier.padding(horizontal = padding16dp),
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.background,
                 titleContentColor = MaterialTheme.colorScheme.onBackground,
-                navigationIconContentColor = MaterialTheme.colorScheme.onBackground
             )
         )
     }) { contentPadding -> content.invoke(contentPadding) }
