@@ -66,49 +66,44 @@ class GameActivity : BaseActivity() {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        val x = super.onKeyUp(keyCode, event)
-        if (x) {
-            return x
-        } else {
-            return when (keyCode) {
-                KeyEvent.KEYCODE_DPAD_UP -> {
-                    gameEngine.addMove(Direction.UP)
-                    true
-                }
-                KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                    gameEngine.addMove(Direction.RIGHT)
-                    true
-                }
-                KeyEvent.KEYCODE_DPAD_DOWN -> {
-                    gameEngine.addMove(Direction.DOWN)
-                    true
-                }
-                KeyEvent.KEYCODE_DPAD_LEFT -> {
-                    gameEngine.addMove(Direction.LEFT)
-                    true
-                }
-                else -> false
+        return when (keyCode) {
+            KeyEvent.KEYCODE_DPAD_UP -> {
+                gameEngine.addMove(Direction.UP)
+                true
             }
+            KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                gameEngine.addMove(Direction.RIGHT)
+                true
+            }
+            KeyEvent.KEYCODE_DPAD_DOWN -> {
+                gameEngine.addMove(Direction.DOWN)
+                true
+            }
+            KeyEvent.KEYCODE_DPAD_LEFT -> {
+                gameEngine.addMove(Direction.LEFT)
+                true
+            }
+            else -> super.onKeyUp(keyCode, event)
         }
     }
 
     override fun onPause() {
         super.onPause()
-        gameEngine.paused = true
+        gameEngine.stop()
     }
 
     override fun onStop() {
         super.onStop()
-        gameEngine.paused = true
+        gameEngine.stop()
     }
 
     override fun onResume() {
         super.onResume()
-        gameEngine.paused = false
+        gameEngine.start()
     }
 
     override fun onStart() {
         super.onStart()
-        gameEngine.paused = false
+        gameEngine.start()
     }
 }

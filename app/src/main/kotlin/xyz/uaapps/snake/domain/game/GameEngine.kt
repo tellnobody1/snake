@@ -1,6 +1,7 @@
 package xyz.uaapps.snake.domain.game
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,10 +32,12 @@ class GameEngine(
     val state: Flow<State> = mutableState
     var boardWidth = BOARD_WIDTH
     var boardHeight = BOARD_WIDTH
-    var paused = false
 
     private var move: Deque<Direction> = LinkedList(listOf())
     private var lastMove: Direction = Direction.RIGHT
+    private var snakeLength = 2
+
+    private var job: Job? = null
 
     fun addMove(value: Direction) {
         scope.launch {
@@ -58,14 +61,14 @@ class GameEngine(
         }
         move = LinkedList(listOf())
         lastMove = Direction.RIGHT
+        snakeLength = 2
     }
 
-    init {
-        scope.launch {
-            var snakeLength = 2
+    fun start() {
+        stop()
+        job = scope.launch {
             while (true) {
                 delay(150)
-                if (paused) continue
                 mutableState.update {
                     val newPosition = it.snake.first().let { poz ->
                         mutex.withLock {
@@ -92,6 +95,10 @@ class GameEngine(
                 }
             }
         }
+    }
+
+    fun stop() {
+        job?.cancel()
     }
 
     private fun moveSnake(
