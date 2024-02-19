@@ -1,5 +1,6 @@
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
+import org.eclipse.jgit.revwalk.RevWalk
 
 plugins {
     id 'com.android.application'
@@ -13,8 +14,8 @@ android {
         applicationId 'xyz.uaapps.snake'
         minSdk 21
         targetSdk 34
-        versionCode 1
-        versionName getGitDescribeVersion(rootDir)
+        versionCode gitCommitsCount(rootDir)
+        versionName gitDescribe(rootDir)
 
         vectorDrawables {
             useSupportLibrary true
@@ -73,7 +74,22 @@ dependencies {
     implementation 'androidx.datastore:datastore-preferences:1.0.0'
 }
 
-static def getGitDescribeVersion(rootDir) {
+static def gitCommitsCount(rootDir) {
+    try (
+        var repository = new FileRepositoryBuilder().setWorkTree(rootDir).build();
+        var revWalk = new RevWalk(repository)
+    ) {
+        var headCommit = revWalk.parseCommit(repository.resolve("HEAD"))
+        revWalk.markStart(headCommit)
+
+        var commitCount = 0
+        revWalk.each { commitCount++ }
+
+        return commitCount
+    }
+}
+
+static def gitDescribe(rootDir) {
     try (
         var repository = new FileRepositoryBuilder().setWorkTree(rootDir).build();
         var git = new Git(repository)
