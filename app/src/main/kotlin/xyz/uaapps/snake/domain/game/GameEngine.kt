@@ -10,7 +10,10 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import xyz.uaapps.snake.data.model.SnakePos
 import xyz.uaapps.snake.data.model.State
+import java.util.Deque
+import java.util.LinkedList
 import java.util.Random
+import kotlin.math.abs
 
 class GameEngine(
     private val scope: CoroutineScope,
@@ -30,18 +33,21 @@ class GameEngine(
     var boardHeight = BOARD_WIDTH
     var paused = false
 
-    var move = Direction.RIGHT
-        set(value) {
-            scope.launch {
-                mutex.withLock {
-                    if (!(field == Direction.RIGHT && value == Direction.LEFT ||
-                        field == Direction.LEFT && value == Direction.RIGHT ||
-                        field == Direction.UP && value == Direction.DOWN ||
-                        field == Direction.DOWN && value == Direction.UP))
-                        field = value
+    private var move: Deque<Direction> = LinkedList(listOf())
+    private var lastMove: Direction = Direction.RIGHT
+
+    fun addMove(value: Direction) {
+        scope.launch {
+            mutex.withLock {
+                val last = toVector(move.peekLast() ?: lastMove)
+                val new = toVector(value)
+                if (!(abs(last.first) == abs(new.first) && abs(last.second) == abs(new.second))) {
+                    move.offer(value)
+                    lastMove = value
                 }
             }
         }
+    }
 
     fun reset() {
         mutableState.update {
@@ -50,7 +56,8 @@ class GameEngine(
                 snake = listOf(Pair(7, 7)),
             )
         }
-        move = Direction.RIGHT
+        move = LinkedList(listOf())
+        lastMove = Direction.RIGHT
     }
 
     init {
@@ -81,7 +88,7 @@ class GameEngine(
                             Random().nextInt(boardHeight)
                         ) else it.food,
                         snake = if (newPosition == it.food) moveSnake(
-                            nextPosition(newPosition),
+                            mutex.withLock { nextPosition(newPosition) },
                             moveSnake(newPosition, it.snake, snakeLength),
                             snakeLength)
                         else moveSnake(newPosition, it.snake, snakeLength),
@@ -98,16 +105,18 @@ class GameEngine(
     ) = listOf(newPosition) + snake.take(snakeLength - 1)
 
     private fun nextPosition(poz: Pair<Int, Int>) = run {
-        val v = when (move) {
-            Direction.RIGHT -> Pair(1, 0)
-            Direction.LEFT -> Pair(-1, 0)
-            Direction.UP -> Pair(0, -1)
-            Direction.DOWN -> Pair(0, 1)
-        }
+        val v = toVector(move.poll() ?: lastMove)
         Pair(
             (poz.first + v.first + boardWidth) % boardWidth,
             (poz.second + v.second + boardHeight) % boardHeight
         )
+    }
+
+    private fun toVector(x: Direction) = when(x) {
+        Direction.RIGHT -> Pair(1, 0)
+        Direction.LEFT -> Pair(-1, 0)
+        Direction.UP -> Pair(0, -1)
+        Direction.DOWN -> Pair(0, 1)
     }
 
     companion object {

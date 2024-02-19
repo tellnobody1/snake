@@ -72,19 +72,19 @@ class GameActivity : BaseActivity() {
         } else {
             return when (keyCode) {
                 KeyEvent.KEYCODE_DPAD_UP -> {
-                    gameEngine.move = Direction.UP
+                    gameEngine.addMove(Direction.UP)
                     true
                 }
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                    gameEngine.move = Direction.RIGHT
+                    gameEngine.addMove(Direction.RIGHT)
                     true
                 }
                 KeyEvent.KEYCODE_DPAD_DOWN -> {
-                    gameEngine.move = Direction.DOWN
+                    gameEngine.addMove(Direction.DOWN)
                     true
                 }
                 KeyEvent.KEYCODE_DPAD_LEFT -> {
-                    gameEngine.move = Direction.LEFT
+                    gameEngine.addMove(Direction.LEFT)
                     true
                 }
                 else -> false
