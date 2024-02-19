@@ -87,11 +87,7 @@ class GameEngine(
                             Random().nextInt(boardWidth),
                             Random().nextInt(boardHeight)
                         ) else it.food,
-                        snake = if (newPosition == it.food) moveSnake(
-                            mutex.withLock { nextPosition(newPosition) },
-                            moveSnake(newPosition, it.snake, snakeLength),
-                            snakeLength)
-                        else moveSnake(newPosition, it.snake, snakeLength),
+                        snake = moveSnake(newPosition, it.snake, snakeLength),
                     )
                 }
             }
