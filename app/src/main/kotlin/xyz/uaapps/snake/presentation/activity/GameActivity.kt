@@ -9,6 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import xyz.uaapps.snake.R
 import xyz.uaapps.snake.data.cache.GameCache
 import xyz.uaapps.snake.data.model.HighScore
@@ -17,8 +19,6 @@ import xyz.uaapps.snake.domain.base.TOP_10
 import xyz.uaapps.snake.domain.game.GameEngine
 import xyz.uaapps.snake.presentation.screen.EndScreen
 import xyz.uaapps.snake.presentation.screen.GameScreen
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 class GameActivity : BaseActivity() {
     private lateinit var dataStore: GameCache
@@ -37,6 +37,32 @@ class GameActivity : BaseActivity() {
         },
         onFoodEaten = { score.intValue++ },
     )
+
+    @Composable
+    override fun Content() {
+        scope = rememberCoroutineScope()
+        dataStore = GameCache(applicationContext)
+        playerName =
+            dataStore.getPlayerName.collectAsState(initial = stringResource(R.string.default_player_name)).value
+        highScores = dataStore.getHighScores.collectAsState(initial = listOf()).value.plus(
+            HighScore(playerName, score.intValue)
+        ).sortedByDescending { it.score }.take(TOP_10)
+
+        Column {
+            if (isPlaying.value) {
+                GameScreen(gameEngine) { w, h ->
+                    gameEngine.boardWidth = w
+                    gameEngine.boardHeight = h
+                }
+            } else {
+                EndScreen(score.intValue) {
+                    score.intValue = 0
+                    gameEngine.reset()
+                    isPlaying.value = true
+                }
+            }
+        }
+    }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         val x = super.onKeyUp(keyCode, event)
@@ -77,29 +103,23 @@ class GameActivity : BaseActivity() {
         }
     }
 
-    @Composable
-    override fun Content() {
-        scope = rememberCoroutineScope()
-        dataStore = GameCache(applicationContext)
-        playerName =
-            dataStore.getPlayerName.collectAsState(initial = stringResource(R.string.default_player_name)).value
-        highScores = dataStore.getHighScores.collectAsState(initial = listOf()).value.plus(
-            HighScore(playerName, score.intValue)
-        ).sortedByDescending { it.score }.take(TOP_10)
+    override fun onPause() {
+        super.onPause()
+        gameEngine.paused = true
+    }
 
-        Column {
-            if (isPlaying.value) {
-                GameScreen(gameEngine) { w, h ->
-                    gameEngine.boardWidth = w
-                    gameEngine.boardHeight = h
-                }
-            } else {
-                EndScreen(score.intValue) {
-                    score.intValue = 0
-                    gameEngine.reset()
-                    isPlaying.value = true
-                }
-            }
-        }
+    override fun onStop() {
+        super.onStop()
+        gameEngine.paused = true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        gameEngine.paused = false
+    }
+
+    override fun onStart() {
+        super.onStart()
+        gameEngine.paused = false
     }
 }

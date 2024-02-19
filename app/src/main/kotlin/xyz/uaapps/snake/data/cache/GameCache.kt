@@ -8,13 +8,13 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import xyz.uaapps.snake.R
 import xyz.uaapps.snake.data.model.HighScore
 import xyz.uaapps.snake.domain.base.DATASTORE_KEY_HIGH_SCORES
 import xyz.uaapps.snake.domain.base.DATASTORE_KEY_PLAYER_NAME
 import xyz.uaapps.snake.domain.base.DATASTORE_NAME
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class GameCache(private val context: Context) {
     companion object {

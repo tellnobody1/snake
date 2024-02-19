@@ -30,21 +30,8 @@ class GameEngine(
     val state: Flow<State> = mutableState
     private val currentDirection = mutableStateOf(SnakeDirection.Right)
     var boardWidth = BOARD_WIDTH
-        set(value) {
-            scope.launch {
-                mutex.withLock {
-                    field = value
-                }
-            }
-        }
     var boardHeight = BOARD_WIDTH
-        set(value) {
-            scope.launch {
-                mutex.withLock {
-                    field = value
-                }
-            }
-        }
+    var paused = false
 
     var move = Pair(1, 0)
         set(value) {
@@ -72,6 +59,7 @@ class GameEngine(
             var snakeLength = 2
             while (true) {
                 delay(150)
+                if (paused) continue
                 mutableState.update {
                     if (move.first == 0 && move.second == -1) {
                         currentDirection.value = SnakeDirection.Up
