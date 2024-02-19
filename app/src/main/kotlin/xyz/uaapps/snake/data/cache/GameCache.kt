@@ -6,8 +6,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import xyz.uaapps.snake.R
@@ -24,9 +22,12 @@ class GameCache(private val context: Context) {
     }
 
     val getHighScores: Flow<List<HighScore>> = context.dataStore.data.map { preferences ->
-        val scores = preferences[HIGH_SCORES_KEY]
-        val listType = object : TypeToken<List<HighScore?>?>() {}.type
-        Gson().fromJson<List<HighScore>>(scores, listType) ?: listOf()
+        val scores = preferences[HIGH_SCORES_KEY].orEmpty()
+        scores.split("\n").flatMap { line ->
+            val fields = line.split("\t")
+            if (fields.size == 2) listOf(HighScore(fields[0], fields[1].toInt()))
+            else listOf()
+        }
     }
 
     val getPlayerName: Flow<String> = context.dataStore.data.map { preferences ->
@@ -35,7 +36,9 @@ class GameCache(private val context: Context) {
 
     suspend fun saveHighScore(highScores: List<HighScore>) {
         context.dataStore.edit { preferences ->
-            preferences[HIGH_SCORES_KEY] = Gson().toJson(highScores)
+            preferences[HIGH_SCORES_KEY] = highScores.joinToString("\n") { obj ->
+                "${obj.playerName}\t${obj.score}"
+            }
         }
     }
 
