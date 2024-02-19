@@ -3,9 +3,15 @@ package xyz.uaapps.snake.presentation.theme
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.intl.Locale
 import xyz.uaapps.snake.R
 
-private val appFontFamily = FontFamily(Font(R.font.snake))
+private val appFontFamily = run {
+    FontFamily(Font(when (Locale.current.language) {
+        "uk" -> R.font.pixelify_sans
+        else -> R.font.nokia
+    }))
+}
 
 val Typography = Typography().copy(
     displayLarge = Typography().displayLarge.copy(fontFamily = appFontFamily),
