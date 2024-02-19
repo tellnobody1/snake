@@ -69,36 +69,24 @@ class GameActivity : BaseActivity() {
         if (x) {
             return x
         } else {
-            if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-                return if (gameEngine.move != Pair(0, -1) && gameEngine.move != Pair(0, 1)) {
+            return when (keyCode) {
+                KeyEvent.KEYCODE_DPAD_UP -> {
                     gameEngine.move = Pair(0, -1)
                     true
-                } else {
-                    false
                 }
-            } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                return if (gameEngine.move != Pair(1, 0) && gameEngine.move != Pair(-1, 0)) {
+                KeyEvent.KEYCODE_DPAD_RIGHT -> {
                     gameEngine.move = Pair(1, 0)
                     true
-                } else {
-                    false
                 }
-            } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-                return if (gameEngine.move != Pair(0, -1) && gameEngine.move != Pair(0, 1)) {
+                KeyEvent.KEYCODE_DPAD_DOWN -> {
                     gameEngine.move = Pair(0, 1)
                     true
-                } else {
-                    false
                 }
-            } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                return if (gameEngine.move != Pair(1, 0) && gameEngine.move != Pair(-1, 0)) {
+                KeyEvent.KEYCODE_DPAD_LEFT -> {
                     gameEngine.move = Pair(-1, 0)
                     true
-                } else {
-                    false
                 }
-            } else {
-                return false
+                else -> false
             }
         }
     }

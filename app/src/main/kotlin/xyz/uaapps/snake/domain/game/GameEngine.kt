@@ -12,6 +12,7 @@ import kotlinx.coroutines.sync.withLock
 import xyz.uaapps.snake.data.model.SnakePos
 import xyz.uaapps.snake.data.model.State
 import java.util.Random
+import kotlin.math.abs
 
 class GameEngine(
     private val scope: CoroutineScope,
@@ -37,6 +38,7 @@ class GameEngine(
         set(value) {
             scope.launch {
                 mutex.withLock {
+                    if (!(abs(field.first) == abs(value.first) && abs(field.second) == abs(value.second)))
                     field = value
                 }
             }
