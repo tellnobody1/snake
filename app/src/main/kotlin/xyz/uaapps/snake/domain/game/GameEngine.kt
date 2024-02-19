@@ -1,9 +1,6 @@
 package xyz.uaapps.snake.domain.game
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
-import xyz.uaapps.snake.data.model.State
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -12,8 +9,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.util.*
-import kotlin.math.floor
+import xyz.uaapps.snake.data.model.SnakePos
+import xyz.uaapps.snake.data.model.State
+import java.util.Random
 
 class GameEngine(
     private val scope: CoroutineScope,
@@ -86,10 +84,7 @@ class GameEngine(
                     }
                     val newPosition = it.snake.first().let { poz ->
                         mutex.withLock {
-                            Pair(
-                                (poz.first + move.first + boardWidth) % boardWidth,
-                                (poz.second + move.second + boardHeight) % boardHeight
-                            )
+                            nextPosition(poz)
                         }
                     }
                     if (newPosition == it.food) {
@@ -107,13 +102,28 @@ class GameEngine(
                             Random().nextInt(boardWidth),
                             Random().nextInt(boardHeight)
                         ) else it.food,
-                        snake = listOf(newPosition) + it.snake.take(snakeLength - 1),
+                        snake = if (newPosition == it.food) moveSnake(
+                            nextPosition(newPosition),
+                            moveSnake(newPosition, it.snake, snakeLength),
+                            snakeLength)
+                        else moveSnake(newPosition, it.snake, snakeLength),
                         currentDirection = currentDirection.value,
                     )
                 }
             }
         }
     }
+
+    private fun moveSnake(
+        newPosition: Pair<Int, Int>,
+        snake: SnakePos,
+        snakeLength: Int
+    ) = listOf(newPosition) + snake.take(snakeLength - 1)
+
+    private fun nextPosition(poz: Pair<Int, Int>) = Pair(
+        (poz.first + move.first + boardWidth) % boardWidth,
+        (poz.second + move.second + boardHeight) % boardHeight
+    )
 
     companion object {
         const val BOARD_WIDTH = 32
