@@ -1,3 +1,6 @@
+import org.eclipse.jgit.api.Git
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -11,7 +14,7 @@ android {
         minSdk 21
         targetSdk 34
         versionCode 1
-        versionName getGitDescribeVersion()
+        versionName getGitDescribeVersion(rootDir)
 
         vectorDrawables {
             useSupportLibrary true
@@ -61,15 +64,11 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10'
 }
 
-def getGitDescribeVersion() {
-    try {
-        def stdout = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'describe'
-            standardOutput = stdout
-        }
-        return stdout.toString().trim()
-    } catch (Exception ignored) {
-        return "1.0.0"
+static def getGitDescribeVersion(rootDir) {
+    try (
+        var repository = new FileRepositoryBuilder().setWorkTree(rootDir).build();
+        var git = new Git(repository)
+    ) {
+        return git.describe().call()
     }
 }
