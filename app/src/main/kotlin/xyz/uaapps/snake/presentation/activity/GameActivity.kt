@@ -16,6 +16,7 @@ import xyz.uaapps.snake.data.cache.GameCache
 import xyz.uaapps.snake.data.model.HighScore
 import xyz.uaapps.snake.domain.base.BaseActivity
 import xyz.uaapps.snake.domain.base.TOP_10
+import xyz.uaapps.snake.domain.game.Direction
 import xyz.uaapps.snake.domain.game.GameEngine
 import xyz.uaapps.snake.presentation.screen.EndScreen
 import xyz.uaapps.snake.presentation.screen.GameScreen
@@ -71,19 +72,19 @@ class GameActivity : BaseActivity() {
         } else {
             return when (keyCode) {
                 KeyEvent.KEYCODE_DPAD_UP -> {
-                    gameEngine.move = Pair(0, -1)
+                    gameEngine.move = Direction.UP
                     true
                 }
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                    gameEngine.move = Pair(1, 0)
+                    gameEngine.move = Direction.RIGHT
                     true
                 }
                 KeyEvent.KEYCODE_DPAD_DOWN -> {
-                    gameEngine.move = Pair(0, 1)
+                    gameEngine.move = Direction.DOWN
                     true
                 }
                 KeyEvent.KEYCODE_DPAD_LEFT -> {
-                    gameEngine.move = Pair(-1, 0)
+                    gameEngine.move = Direction.LEFT
                     true
                 }
                 else -> false
