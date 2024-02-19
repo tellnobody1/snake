@@ -40,8 +40,8 @@ fun AboutScreen() {
         )
         Text(
             modifier = Modifier.padding(padding8dp),
-            text = BuildConfig.VERSION_NAME,
-            style = MaterialTheme.typography.titleLarge,
+            text = stringResource(R.string.version, BuildConfig.VERSION_NAME),
+            style = MaterialTheme.typography.titleSmall,
         )
         Text(
             modifier = Modifier.padding(padding8dp),
