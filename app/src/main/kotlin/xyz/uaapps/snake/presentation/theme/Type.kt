@@ -8,7 +8,7 @@ import xyz.uaapps.snake.R
 
 private val appFontFamily = run {
     FontFamily(Font(when (Locale.current.language) {
-        "uk" -> R.font.pixelify_sans
+        "uk" -> R.font.hardpixel
         else -> R.font.nokia
     }))
 }
