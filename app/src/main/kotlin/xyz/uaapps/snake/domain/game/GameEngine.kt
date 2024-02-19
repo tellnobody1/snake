@@ -1,6 +1,5 @@
 package xyz.uaapps.snake.domain.game
 
-import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -25,11 +24,9 @@ class GameEngine(
             State(
                 food = Pair(5, 5),
                 snake = listOf(Pair(7, 7)),
-                currentDirection = SnakeDirection.Right
             )
         )
     val state: Flow<State> = mutableState
-    private val currentDirection = mutableStateOf(SnakeDirection.Right)
     var boardWidth = BOARD_WIDTH
     var boardHeight = BOARD_WIDTH
     var paused = false
@@ -49,10 +46,8 @@ class GameEngine(
             it.copy(
                 food = Pair(5, 5),
                 snake = listOf(Pair(7, 7)),
-                currentDirection = SnakeDirection.Right
             )
         }
-        currentDirection.value = SnakeDirection.Right
         move = Pair(1, 0)
     }
 
@@ -63,15 +58,6 @@ class GameEngine(
                 delay(150)
                 if (paused) continue
                 mutableState.update {
-                    if (move.first == 0 && move.second == -1) {
-                        currentDirection.value = SnakeDirection.Up
-                    } else if (move.first == -1 && move.second == 0) {
-                        currentDirection.value = SnakeDirection.Left
-                    } else if (move.first == 1 && move.second == 0) {
-                        currentDirection.value = SnakeDirection.Right
-                    } else if (move.first == 0 && move.second == 1) {
-                        currentDirection.value = SnakeDirection.Down
-                    }
                     val newPosition = it.snake.first().let { poz ->
                         mutex.withLock {
                             nextPosition(poz)
@@ -97,7 +83,6 @@ class GameEngine(
                             moveSnake(newPosition, it.snake, snakeLength),
                             snakeLength)
                         else moveSnake(newPosition, it.snake, snakeLength),
-                        currentDirection = currentDirection.value,
                     )
                 }
             }
