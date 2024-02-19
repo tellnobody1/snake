@@ -1,14 +1,13 @@
 <resources>
     <string name="app_name">Snake</string>
     <string name="default_player_name">Player 1</string>
-    <string name="about_game">Experience the nostalgia with our Snake game, inspired by the classic Nokia version. Navigate the snake, avoid obstacles, and collect apples to grow longer. Challenge yourself to beat your high score in this timeless arcade game.</string>
+    <string name="about_game">Experience the nostalgia with our Snake game, inspired by the classic Nokia version. Navigate the snake, avoid obstacles, and collect apples to grow longer. Challenge yourself to beat your high score in this timeless arcade game.\n\nFeatures:\n• Simple and intuitive controls\n• Classic gameplay with physical keyboard\n• High score tracking for endless competition\n\nHow to Play:\nUse the arrow keys to move the snake. Avoid running into the snake\'s own tail. Eat apples to increase your score and the snake\'s length.\n\nFeedback:\nWe love hearing from our players! If you have any suggestions or feedback, please contact us.</string>
     <string name="source_code">Source Code</string>
-    <string name="title_about">About</string>
     <string name="game_over">Game Over!</string>
     <string name="your_score">Your score: %s</string>
     <string name="try_again">Try Again</string>
     <string name="high_score">High Scores</string>
-    <string name="player_name">Player Name</string>
+    <string name="player_name">Player name</string>
     <string name="player_name_table">Name</string>
     <string name="score">Score</string>
     <string name="new_game">New Game</string>

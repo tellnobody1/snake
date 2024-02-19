@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Змійка</string>
+    <string name="default_player_name">Гравець 1</string>
+    <string name="about_game">Відчуйте ностальгію з грою Змійка, натхненною класичною версією від Nokia. Керуйте змійкою, уникайте перешкод і збирайте яблука, щоб рости довше. Поставте собі виклик, щоб побити свій рекорд у цій позачасовій аркадній грі.\n\nОсобливості:\n• Просте та інтуїтивно зрозуміле керування\n• Класичний ігровий процес із фізичною клавіатурою\n• Відстеження рекордів для нескінченного змагання\n\nЯк грати:\nВикористовуйте клавіші зі стрілками для переміщення змійки. Уникайте наткнутися на хвіст змії. Їжте яблука, щоб збільшити свій рахунок і довжину змії.\n\nЗворотній зв\'язок:\nНам подобається чути відгуки наших гравців! Якщо у вас є пропозиції чи відгуки, зв’яжіться з нами.</string>
+    <string name="source_code">Джерельний код</string>
+    <string name="game_over">Кінець гри!</string>
+    <string name="your_score">Ваш рахунок: %s</string>
+    <string name="try_again">Спробувати ще раз</string>
+    <string name="high_score">Рекорди</string>
+    <string name="player_name">Ім\'я гравця</string>
+    <string name="player_name_table">Ім\'я</string>
+    <string name="score">Рахунок</string>
+    <string name="new_game">Нова гра</string>
+    <string name="settings">Налаштування</string>
+    <string name="about">Про Змійку</string>
+    <string name="title_settings">Налаштування</string>
+    <string name="save">Зберігти</string>
+    <string name="player_name_updated">Ім\'я гравця збережене</string>
+    <string name="version">Версія: %1$s</string>
+</resources>
