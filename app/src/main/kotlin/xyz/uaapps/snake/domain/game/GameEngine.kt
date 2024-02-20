@@ -52,6 +52,36 @@ class GameEngine(
         }
     }
 
+    fun addMoveRelative(value: Direction) {
+        scope.launch {
+            mutex.withLock {
+                when (value) {
+                    Direction.RIGHT -> {
+                        val new = when (lastMove) {
+                            Direction.RIGHT -> Direction.DOWN
+                            Direction.LEFT -> Direction.UP
+                            Direction.UP -> Direction.RIGHT
+                            Direction.DOWN -> Direction.LEFT
+                        }
+                        move.offer(new)
+                        lastMove = new
+                    }
+                    Direction.LEFT -> {
+                        val new = when (lastMove) {
+                            Direction.RIGHT -> Direction.UP
+                            Direction.LEFT -> Direction.DOWN
+                            Direction.UP -> Direction.LEFT
+                            Direction.DOWN -> Direction.RIGHT
+                        }
+                        move.offer(new)
+                        lastMove = new
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
     fun reset() {
         mutableState.update {
             it.copy(

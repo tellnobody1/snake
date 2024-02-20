@@ -65,7 +65,7 @@ class GameActivity : BaseActivity() {
         }
     }
 
-    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         return when (keyCode) {
             KeyEvent.KEYCODE_DPAD_UP -> {
                 gameEngine.addMove(Direction.UP)
@@ -83,7 +83,15 @@ class GameActivity : BaseActivity() {
                 gameEngine.addMove(Direction.LEFT)
                 true
             }
-            else -> super.onKeyUp(keyCode, event)
+            KeyEvent.KEYCODE_VOLUME_UP -> {
+                gameEngine.addMoveRelative(Direction.LEFT)
+                true
+            }
+            KeyEvent.KEYCODE_VOLUME_DOWN -> {
+                gameEngine.addMoveRelative(Direction.RIGHT)
+                true
+            }
+            else -> super.onKeyDown(keyCode, event)
         }
     }
 
