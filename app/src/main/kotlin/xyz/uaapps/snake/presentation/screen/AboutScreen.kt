@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import xyz.uaapps.snake.BuildConfig
 import xyz.uaapps.snake.R
 import xyz.uaapps.snake.domain.base.REPO_URL
 import xyz.uaapps.snake.presentation.component.AppButton
@@ -39,11 +38,6 @@ fun AboutScreen() {
         Text(
             text = stringResource(R.string.app_name),
             style = MaterialTheme.typography.displayLarge,
-        )
-        Text(
-            modifier = Modifier.padding(padding8dp),
-            text = stringResource(R.string.version, BuildConfig.VERSION_NAME),
-            style = MaterialTheme.typography.titleSmall,
         )
         Text(
             modifier = Modifier.padding(padding8dp),

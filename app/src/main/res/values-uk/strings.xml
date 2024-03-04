@@ -16,5 +16,4 @@
     <string name="title_settings">Налаштування</string>
     <string name="save">Зберігти</string>
     <string name="player_name_updated">Ім\'я гравця збережене</string>
-    <string name="version">Версія: %1$s</string>
 </resources>
